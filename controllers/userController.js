@@ -8,8 +8,7 @@ const { User } = require("../models/userModel");
 //           GetUser ByID
 // ---------------------------------------
 const getUserByID = (req, res) => {
-  const id = req.params.id;
-  User.findOne({ userName: id })
+  User.findOne({ userName: req.token.userName })
     .populate("role")
     .then((result) => {
       console.log(result);
@@ -42,9 +41,9 @@ const getUserByID = (req, res) => {
 // ---------------------------------------
 
 const login = (req, res) => {
-  const { userName, password } = req.body;
+  const { email, password } = req.body;
   console.log(req.body.password);
-  User.findOne({ userName: userName })
+  User.findOne({ email: email })
     .populate("role")
     .then((result) => {
       if (result) {
@@ -58,7 +57,8 @@ const login = (req, res) => {
           if (result2) {
             const payload = {
               id: result._id,
-              username: result.username,
+              userName: result.userName,
+              email: result.email,
               permissions: result.role.permissions,
             };
             const options = {

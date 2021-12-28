@@ -7,7 +7,7 @@ const { authorization } = require("../middlewares/authorization")
 const userRouter=express.Router();
 
 
-userRouter.get('/:id',authentication,getUserByID)
+userRouter.get('/getUserByID', authentication,getUserByID)
 userRouter.post('/rigester',rigester)
 userRouter.post('/login',login)
 
